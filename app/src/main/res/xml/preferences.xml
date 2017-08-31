@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Settings">
+    <PreferenceCategory android:title="参数设置">
+    <EditTextPreference
+        android:title="压缩大小"
+        android:key="compressSize"
+        android:defaultValue="1000"
+        android:numeric="integer"
+        />
+        <EditTextPreference
+            android:title="人脸分辨率"
+            android:key="faceSize"
+            android:defaultValue="96"
+            android:numeric="integer"
+            />
+        <ListPreference     android:title="识别模式"
+            android:key="faceMode"
+            android:defaultValue="2"
+            android:entries="@array/faceArray"
+            android:entryValues="@array/faceValues" />
+        <EditTextPreference
+            android:title="服务器地址"
+            android:key="server"
+            android:defaultValue="@string/default_server"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

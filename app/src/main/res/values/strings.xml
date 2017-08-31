@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WhoRU</string>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_grid">GridActivity</string>
+    <string name="default_server">http://182.254.214.148/prp/</string>
+    <string name="action_settings">Settings</string>
+</resources>
