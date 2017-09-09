@@ -143,7 +143,7 @@ public class ListActivity extends AppCompatActivity {
                                 @Override
                                 public void onRetry(int retryNo) {
                                     if(retryNo == 2){
-                                        Toast.makeText(ListActivity.this,"请检查网络连接！",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ListActivity.this,NETERR,Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 @Override
@@ -158,8 +158,8 @@ public class ListActivity extends AppCompatActivity {
                                     if(responseBody != null){
                                         responseString = new String(responseBody);
                                     }
-                                    Log.e("服务器故障",responseString);
-                                    Toast.makeText(ListActivity.this,"操作失败！",Toast.LENGTH_SHORT).show();
+                                    Log.e(NETERR,responseString);
+                                    Toast.makeText(ListActivity.this,NETERR,Toast.LENGTH_SHORT).show();
                                 }
                             });
                         } else {
@@ -203,7 +203,7 @@ public class ListActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                Toast.makeText(ListActivity.this,"操作失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ListActivity.this,NETERR,Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -243,7 +243,7 @@ public class ListActivity extends AppCompatActivity {
                             }
                             @Override
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                Toast.makeText(ListActivity.this,"操作失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ListActivity.this,NETERR,Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

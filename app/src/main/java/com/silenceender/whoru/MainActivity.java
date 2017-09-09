@@ -3,13 +3,17 @@ package com.silenceender.whoru;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.StrictMode;
+import android.preference.ListPreference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +23,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import cz.msebera.android.httpclient.Header;
 import com.silenceender.whoru.model.RemoteDbManager;
 import com.silenceender.whoru.preferences.MyPreferencesActivity;
+import com.silenceender.whoru.utils.CompressImageUtil;
 import com.silenceender.whoru.utils.FaceUtil;
+import com.silenceender.whoru.utils.JSONResponseHelper;
+import com.silenceender.whoru.utils.ToolHelper;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import static com.silenceender.whoru.utils.ToolHelper.*;
@@ -42,13 +49,20 @@ public class MainActivity extends TakePhotoActivity {
         setContentView(R.layout.activity_main);
         avi= (AVLoadingIndicatorView) findViewById(R.id.avi);
         mainActivity = MainActivity.this;
+        setParams();
         checkNetwork();
         RemoteDbManager.addNewDevice(this, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                JSONResponseHelper response = new JSONResponseHelper(responseBody);
+                if(statusCode != 200 || response.getStatus() != 1){
+                    Toast.makeText(MainActivity.this,SERVERERR,Toast.LENGTH_SHORT).show();
+                    Log.e("Add device",response.getMsg());
+                }
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(MainActivity.this,NETERR,Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -95,6 +109,19 @@ public class MainActivity extends TakePhotoActivity {
     void stopAnim(){
         //avi.hide();
         avi.smoothToHide();
+    }
+
+    private void setParams() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        CompressImageUtil.setCompressSize(Integer.parseInt(sharedPref.getString("compressSize","1000")));
+        FaceUtil.setFaceSize(Integer.parseInt(sharedPref.getString("faceSize","96")));
+        if(Integer.parseInt(sharedPref.getString("faceMode","2")) == 2){
+            FaceUtil.setMode(this.getString(R.string.faceMode_2));
+        } else {
+            FaceUtil.setMode(this.getString(R.string.faceMode_1));
+        }
+        ToolHelper.setServer(sharedPref.getString("server",getString(R.string.default_server)));
+        Toast.makeText(MainActivity.this,sharedPref.getString("server",getString(R.string.default_server)),Toast.LENGTH_SHORT).show();
     }
 
     private void checkNetwork() {

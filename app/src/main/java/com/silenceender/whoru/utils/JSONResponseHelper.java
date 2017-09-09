@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 public final class JSONResponseHelper {
     private JSONObject json = null;
     private int status = -1;
-    private String message = "";
+    private String message = "Not set";
 
     public JSONResponseHelper(String string) {
         try{

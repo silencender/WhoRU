@@ -139,7 +139,7 @@ public class GallaryActivity extends TakePhotoActivity{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         person.setPicnames("");
-                        RemoteDbManager.update(person, new AsyncHttpResponseHandler() {
+                        RemoteDbManager.clearGal(person, new AsyncHttpResponseHandler() {
                             @Override
                             public void onStart() {
                                 startAnim();
@@ -157,7 +157,7 @@ public class GallaryActivity extends TakePhotoActivity{
 
                             @Override
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                Toast.makeText(gallaryActivity,"操作失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(gallaryActivity,NETERR,Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -181,8 +181,7 @@ public class GallaryActivity extends TakePhotoActivity{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final String picName = listItems.get(position);
-                        person.removePicname(position);
-                        RemoteDbManager.update(person, new AsyncHttpResponseHandler() {
+                        RemoteDbManager.update(new Person(person.getName(),PREFIX + picName), new AsyncHttpResponseHandler() {
                             @Override
                             public void onStart() {
                                 startAnim();
@@ -193,6 +192,7 @@ public class GallaryActivity extends TakePhotoActivity{
                             }
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                person.removePicname(position);
                                 db.update(person);
                                 deleteFolderFile(SAVEDIR + person.getName() + DIVIDE + picName,true);
                                 deleteFolderFile(SAVEDIR + person.getName() + DIVIDE + PREFIX + picName,true);
@@ -201,7 +201,7 @@ public class GallaryActivity extends TakePhotoActivity{
 
                             @Override
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                Toast.makeText(gallaryActivity,"操作失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(gallaryActivity,NETERR,Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

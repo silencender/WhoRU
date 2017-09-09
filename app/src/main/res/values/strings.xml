@@ -4,4 +4,6 @@
     <string name="title_activity_grid">GridActivity</string>
     <string name="default_server">http://182.254.214.148/prp/</string>
     <string name="action_settings">Settings</string>
+    <string name="faceMode_1">INNER EYES AND BOTTOM LIP</string>
+    <string name="faceMode_2">OUTER EYES AND NOSE</string>
 </resources>

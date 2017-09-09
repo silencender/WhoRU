@@ -19,6 +19,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.silenceender.whoru.R;
 import com.silenceender.whoru.model.Person;
+import com.silenceender.whoru.model.RemoteDbManager;
 
 import org.opencv.core.Point;
 
@@ -47,9 +48,11 @@ public final class ToolHelper {
     public static final String SAVEDIR = Environment.getExternalStorageDirectory().getPath() + "/WhoRU/photos/";
     public static final String TEMPDIR = "../temp/";
     public static String BASEURL = "http://182.254.214.148/prp/";
-    public static String UPLOADURL = BASEURL + "upload.php";
-    public static String OPERATEURL = BASEURL + "control.php";
+    public static String UPLOADURL = BASEURL + "upload";
+    public static String OPERATEURL = BASEURL + "control";
     public static final String SALT = "UrW9CL1APb";
+    public static final String SERVERERR = "服务器错误！";
+    public static final String NETERR = "请检查网络连接！";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     private ToolHelper() {}
@@ -170,6 +173,7 @@ public final class ToolHelper {
         try {
             new MultipartUploadRequest(context, uploadID, UPLOADURL)
                     .addFileToUpload(path,IMGPARAM,picName,"image/jpeg")
+                    .addParameter("device", RemoteDbManager.getDeviceID())
                     .addParameter("name", person.getName())
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)

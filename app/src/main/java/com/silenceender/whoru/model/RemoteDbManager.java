@@ -23,9 +23,13 @@ public final class RemoteDbManager {
     public static void addNewDevice(Activity activity, AsyncHttpResponseHandler responseHandler) {
         if(deviceID.equals("")) {
             TelephonyManager tm = (TelephonyManager) activity.getSystemService(TELEPHONY_SERVICE);
-            deviceID = tm.getDeviceId();
-            post(setParams("addNewDevice",md5(SALT + deviceID)),responseHandler);
+            deviceID = md5(SALT + tm.getDeviceId());
+            post(setParams("addNewDevice",deviceID),responseHandler);
         }
+    }
+
+    public static String getDeviceID() {
+        return deviceID;
     }
 
     public static void insert(Person person, AsyncHttpResponseHandler responseHandler) {
@@ -37,7 +41,11 @@ public final class RemoteDbManager {
     }
 
     public static void clear(AsyncHttpResponseHandler responseHandler) {
-        post(setParams("clear",""),responseHandler);
+        post(setParams("clear",deviceID),responseHandler);
+    }
+
+    public static void clearGal(Person person,AsyncHttpResponseHandler responseHandler) {
+        post(setParams("cleargal",person.getName()),responseHandler);
     }
 
     public static void update(Person person, AsyncHttpResponseHandler responseHandler) {
