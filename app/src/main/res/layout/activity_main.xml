@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:text="让我看看你是谁？"
-        android:onClick="recognizeFace" />
+        android:onClick="showChooseDialog" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"

@@ -95,12 +95,6 @@ public class MainActivity extends TakePhotoActivity {
         startActivity(intent);
     }
 
-    public void recognizeFace(View view){
-        TakePhoto obj = getTakePhoto();
-        obj.setImageUri(SAVEDIR + TEMPDIR + autoName());
-        obj.picTakeCrop();
-    }
-
     void startAnim(){
         //avi.show();
         avi.smoothToShow();
@@ -131,6 +125,36 @@ public class MainActivity extends TakePhotoActivity {
         if(!isConnected) {
             showNormalDialog();
         }
+    }
+
+    public void showChooseDialog(View view){
+        final String[] items = { "相机","图库"};
+        AlertDialog.Builder listDialog =
+                new AlertDialog.Builder(MainActivity.this);
+        listDialog.setTitle("请选择图片来源");
+        listDialog.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0){
+                    recognizeFaceFromGallary();
+                } else {
+                    recognizeFaceFromCamera();
+                }
+            }
+        });
+        listDialog.show();
+    }
+
+    private void recognizeFaceFromGallary(){
+        TakePhoto obj = getTakePhoto();
+        obj.setImageUri(SAVEDIR + TEMPDIR + autoName());
+        obj.picTakeCrop();
+    }
+
+    private void recognizeFaceFromCamera(){
+        TakePhoto obj = getTakePhoto();
+        obj.setImageUri(SAVEDIR + TEMPDIR + autoName());
+        obj.picSelectCrop();
     }
 
     private void showNormalDialog(){
