@@ -141,7 +141,7 @@ public class ResultActivity extends Activity implements FaceUtil.FaceAlignListen
 
     @Override
     public void onUploadSuccess(String msg) {
-        RemoteDbManager.ask(picName, new AsyncHttpResponseHandler() {
+        RemoteDbManager.ask(PREFIX + picName, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
                 mEditText.setText("让我想想你是谁(￣▽￣)...");
