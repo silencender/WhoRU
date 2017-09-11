@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from face import Analyse,Recognize
 from flask import Flask,request
 import json
@@ -11,7 +13,7 @@ def index():
 @app.route('/analyse', methods=['POST'])
 def analyse():
 	device = str(request.form['device'])
-	person = str(request.form['person'])
+	person = unicode(request.form['person'])
 	picname = str(request.form['picname'])
 	# device = 'd41d8cd98f00b204e9800998ecf8427e'
 	# person = 'hhh'

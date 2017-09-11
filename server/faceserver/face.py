@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import openface
 import cv2
 import numpy as np
@@ -15,7 +17,7 @@ net = openface.TorchNeuralNet(of_dir+'/models/openface/nn4.small2.v1.t7', imgDim
 class Analyse:
 	def __init__(self,device,person,picname):
 		img = share_dir + DIVIDE + device + DIVIDE + person + DIVIDE + picname
-		bgrImg = cv2.imread(img)
+		bgrImg = cv2.imread(img.encode('utf-8'))
 		rgbImg = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
 		self.data = net.forward(rgbImg)
 
@@ -33,8 +35,6 @@ class Recognize:
 				labels.append(key)
 			data = np.vstack((data,np.asarray(value)))
 		data = np.vstack((data,self.data))
-		# print labels
-		# print data
 		k_neibor = 8
 		if len(labels) < 8:
 			k_neibor = len(labels)

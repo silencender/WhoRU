@@ -46,11 +46,11 @@ class dbManager {
 													(SELECT id FROM prp_device WHERE device = ?)");
 		self::$fetch_data = self::$conn->prepare("SELECT data FROM prp_image WHERE person =
 													(SELECT id FROM prp_person WHERE (device,person) = 
-														((SELECT id FROM prp_device WHERE device = ?),?)");
+														((SELECT id FROM prp_device WHERE device = ?),?))");
 	}
 
 	public function getInstance() {
-		if(!self::$instance){
+		if(self::$instance == null){
 			try{
 				self::$instance = new self();
 			}catch(Exception $e) {
@@ -126,7 +126,7 @@ class dbManager {
 			self::$fetch_data -> execute();
 			self::$fetch_data -> bind_result($data);
 			while (self::$fetch_data->fetch()) {
-				array_push($result, $data);
+				array_push($result, json_decode($data,true));
 			}
 		} catch(Exception $e){
 		}
