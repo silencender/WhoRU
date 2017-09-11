@@ -39,6 +39,7 @@ public class GallaryActivity extends TakePhotoActivity{
     public static GallaryActivity gallaryActivity;
     private AVLoadingIndicatorView avi;
     private static final String TITLE = "人物图库";
+    private static final String SPLIT = " - ";
     private UploadServiceBroadcastReceiver uploadReceiver;
     private GridView gridview;
     private  Person person;
@@ -52,8 +53,10 @@ public class GallaryActivity extends TakePhotoActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
+        Intent intent = getIntent();
+        this.person = new Person(intent.getStringExtra("name"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(TITLE);
+        toolbar.setTitle(TITLE + SPLIT + this.person.getName());
         setSupportActionBar(toolbar);
         gallaryActivity = GallaryActivity.this;
         db = new PersonDbManager(gallaryActivity.getApplicationContext());
@@ -62,8 +65,6 @@ public class GallaryActivity extends TakePhotoActivity{
         this.dialog = new ProgressDialog(this);
         UploadService.NAMESPACE = "com.silenceender.whoru";
         uploadReceiver = new UploadReceiver(this,this.dialog);
-        Intent intent = getIntent();
-        this.person = new Person(intent.getStringExtra("name"));
         refreshList();
         FloatingActionButton addFab = (FloatingActionButton) findViewById(R.id.addfab);
         addFab.setOnClickListener(new View.OnClickListener() {
