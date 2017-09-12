@@ -100,6 +100,17 @@ class Controler {
 				}
 				$info['status'] = 1;
 				$info['message'] = $result;
+				break;
+
+			case 'inherit':
+				if($dbManager -> isDeviceIn($value)){
+					$info['status'] = 1;
+					$info['message'] = 'Successfully inherited!';
+				} else{
+					$info['status'] = 0;
+					$info['message'] = 'Failed!';
+				}
+				break;
 
 			default:
 				break;
