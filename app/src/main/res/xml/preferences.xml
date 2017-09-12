@@ -25,4 +25,14 @@
             android:defaultValue="@string/default_server"
             />
     </PreferenceCategory>
+    <PreferenceCategory android:title="引继">
+        <Preference android:title="复制引继码"
+            android:key="getCode" />
+        <EditTextPreference
+            android:title="引继设置"
+            android:key="inherit"
+            />
+        <Preference android:title="取消引继"
+            android:key="cancelInherit" />
+    </PreferenceCategory>
 </PreferenceScreen>

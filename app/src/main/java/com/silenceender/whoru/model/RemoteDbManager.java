@@ -23,13 +23,17 @@ public final class RemoteDbManager {
     public static void addNewDevice(Activity activity, AsyncHttpResponseHandler responseHandler) {
         if(deviceID.equals("")) {
             TelephonyManager tm = (TelephonyManager) activity.getSystemService(TELEPHONY_SERVICE);
-            deviceID = md5(SALT + tm.getDeviceId());
+            deviceID = hash(SALT + tm.getDeviceId());
             post(setParams("addNewDevice",deviceID),responseHandler);
         }
     }
 
     public static String getDeviceID() {
         return deviceID;
+    }
+
+    public static void setDeviceID(String ID) {
+        deviceID = ID;
     }
 
     public static void insert(Person person, AsyncHttpResponseHandler responseHandler) {
@@ -54,6 +58,10 @@ public final class RemoteDbManager {
 
     public static void ask(String picName, AsyncHttpResponseHandler responseHandler) {
         post(setParams("ask",picName),responseHandler);
+    }
+
+    public static void inherit(String account, AsyncHttpResponseHandler responseHandler) {
+        post(setParams("inherit",account),responseHandler);
     }
 
     private static RequestParams setParams(String method,String value) {

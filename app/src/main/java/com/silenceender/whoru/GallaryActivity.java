@@ -39,7 +39,6 @@ public class GallaryActivity extends TakePhotoActivity{
     public static GallaryActivity gallaryActivity;
     private AVLoadingIndicatorView avi;
     private static final String TITLE = "人物图库";
-    private static final String SPLIT = " - ";
     private UploadServiceBroadcastReceiver uploadReceiver;
     private GridView gridview;
     private  Person person;
@@ -56,7 +55,7 @@ public class GallaryActivity extends TakePhotoActivity{
         Intent intent = getIntent();
         this.person = new Person(intent.getStringExtra("name"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(TITLE + SPLIT + this.person.getName());
+        toolbar.setTitle(TITLE + TITLESPLIT + this.person.getName());
         setSupportActionBar(toolbar);
         gallaryActivity = GallaryActivity.this;
         db = new PersonDbManager(gallaryActivity.getApplicationContext());

@@ -45,6 +45,7 @@ public final class ToolHelper {
 
     public static final String SEPARATOR = ",";
     public static  final String DIVIDE = "/";
+    public static final String TITLESPLIT = " - ";
     public static final String SAVEDIR = Environment.getExternalStorageDirectory().getPath() + "/WhoRU/photos/";
     public static final String TEMPDIR = "../temp/";
     public static String BASEURL = "http://182.254.214.148/prp/";
@@ -108,21 +109,20 @@ public final class ToolHelper {
         return new String(String.valueOf(System.currentTimeMillis())) + ".jpg";
     }
 
-    public static String md5(String string) {
-        StringBuffer hexString = new StringBuffer();
+    public static String hash(String string) {
+        byte[] digest = null;
         try{
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hash = md.digest();
-
-            for (int i = 0; i < hash.length; i++) {
-                if ((0xff & hash[i]) < 0x10) {
-                    hexString.append("0"  + Integer.toHexString((0xFF & hash[i])));
-                } else {
-                    hexString.append(Integer.toHexString(0xFF & hash[i]));
-                }
-            }
+            md.update(string.getBytes());
+            digest = md.digest();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        final String DICT = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuffer hexString = new StringBuffer();
+        for(byte by : digest){
+            int index = (0xff & by)%DICT.length();
+            hexString.append(DICT.charAt(index));
         }
         return hexString.toString();
     }

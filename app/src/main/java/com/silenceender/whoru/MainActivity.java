@@ -39,6 +39,9 @@ public class MainActivity extends TakePhotoActivity {
 
     private static String picName;
     private AVLoadingIndicatorView avi;
+    private static boolean inherit = false;
+    private static final String TAG = "WhoRU";
+    private static final String INHTNOTI = "引继模式";
 
     public static MainActivity mainActivity;
     @Override
@@ -51,20 +54,9 @@ public class MainActivity extends TakePhotoActivity {
         mainActivity = MainActivity.this;
         setParams();
         checkNetwork();
-        RemoteDbManager.addNewDevice(this, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                JSONResponseHelper response = new JSONResponseHelper(responseBody);
-                if(statusCode != 200 || response.getStatus() != 1){
-                    Toast.makeText(MainActivity.this,SERVERERR,Toast.LENGTH_SHORT).show();
-                    Log.e("Add device",response.getMsg());
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(MainActivity.this,NETERR,Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(!inherit) {
+            addNewDevice();
+        }
     }
 
     @Override
@@ -90,9 +82,43 @@ public class MainActivity extends TakePhotoActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static boolean setInherit(String deviceID) {
+        if(deviceID.equals("")) {
+            inherit = false;
+            addNewDevice();
+        } else {
+            inherit = true;
+            RemoteDbManager.setDeviceID(deviceID);
+        }
+        changeTitle();
+        return true;
+    }
+
+    private static void changeTitle() {
+        if(inherit) {
+            mainActivity.setTitle(TAG + TITLESPLIT + INHTNOTI);
+        } else {
+            mainActivity.setTitle(TAG);
+        }
+    }
+
     public void uploadToGallary(View view){
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        startActivity(intent);
+        if(!inherit){
+            Intent intent = new Intent(MainActivity.this, ListActivity.class);
+            startActivity(intent);
+        } else {
+            final AlertDialog.Builder normalDialog =
+                    new AlertDialog.Builder(mainActivity);
+            normalDialog.setTitle("无法打开");
+            normalDialog.setMessage("引继模式下无法管理人物！");
+            normalDialog.setPositiveButton("确定",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+            normalDialog.show();
+        }
     }
 
     void startAnim(){
@@ -103,6 +129,23 @@ public class MainActivity extends TakePhotoActivity {
     void stopAnim(){
         //avi.hide();
         avi.smoothToHide();
+    }
+
+    private static void addNewDevice() {
+        RemoteDbManager.addNewDevice(mainActivity, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                JSONResponseHelper response = new JSONResponseHelper(responseBody);
+                if(statusCode != 200 || response.getStatus() != 1){
+                    Toast.makeText(MainActivity.mainActivity,SERVERERR,Toast.LENGTH_SHORT).show();
+                    Log.e("Add device",response.getMsg());
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(MainActivity.mainActivity,NETERR,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setParams() {
@@ -116,6 +159,7 @@ public class MainActivity extends TakePhotoActivity {
         }
         ToolHelper.setServer(sharedPref.getString("server",getString(R.string.default_server)));
         Toast.makeText(MainActivity.this,sharedPref.getString("server",getString(R.string.default_server)),Toast.LENGTH_SHORT).show();
+        setInherit(sharedPref.getString("inherit",""));
     }
 
     private void checkNetwork() {
