@@ -23,21 +23,18 @@ import com.alexbbb.uploadservice.UploadServiceBroadcastReceiver;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.silenceender.whoru.model.Person;
 import com.silenceender.whoru.model.RemoteDbManager;
-import com.silenceender.whoru.utils.FaceUtil;
 import com.silenceender.whoru.utils.JSONResponseHelper;
 import com.silenceender.whoru.utils.UploadReceiver;
-import com.tzutalin.dlib.Constants;
 
 import cz.msebera.android.httpclient.Header;
 
-import static com.silenceender.whoru.utils.FaceUtil.PREFIX;
 import static com.silenceender.whoru.utils.ToolHelper.DIVIDE;
 import static com.silenceender.whoru.utils.ToolHelper.SAVEDIR;
 import static com.silenceender.whoru.utils.ToolHelper.TEMPDIR;
 import static com.silenceender.whoru.utils.ToolHelper.deleteFolderFile;
 import static com.silenceender.whoru.utils.ToolHelper.uploadMultipart;
 
-public class ResultActivity extends Activity implements FaceUtil.FaceAlignListener,UploadReceiver.UploadResultListener{
+public class ResultActivity extends Activity implements UploadReceiver.UploadResultListener{
 
     private ImageView imgShow;
     private EditText mEditText;
@@ -102,7 +99,8 @@ public class ResultActivity extends Activity implements FaceUtil.FaceAlignListen
     }
 
     private void getResult() {
-        new FaceUtil(Constants.getFaceShapeModelPath(),this,this).align(this,imgPath);
+        mEditText.setText("上传图片中...");
+        uploadMultipart(this,this,imgPath,new Person("UNKNOWN"),null);
     }
 
     public static Bitmap toRoundCorner(Bitmap bitmap, int pixels) {
@@ -123,25 +121,8 @@ public class ResultActivity extends Activity implements FaceUtil.FaceAlignListen
     }
 
     @Override
-    public void onFaceAlignInfo(String msg) {
-        mEditText.setText(msg);
-    }
-
-    @Override
-    public void onFaceAlignSuccessed(String imgPath) {
-        mEditText.setText("上传人脸数据中...");
-        uploadMultipart(this,this,imgPath,new Person("UNKNOWN"),null);
-    }
-
-    @Override
-    public void onFaceAlignFailed(String msg) {
-        mEditText.setText(msg);
-        deleteFolderFile(SAVEDIR + TEMPDIR + DIVIDE + picName,true);
-    }
-
-    @Override
     public void onUploadSuccess(String msg) {
-        RemoteDbManager.ask(PREFIX + picName, new AsyncHttpResponseHandler() {
+        RemoteDbManager.ask(picName, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
                 mEditText.setText("让我想想你是谁(￣▽￣)...");
@@ -170,7 +151,6 @@ public class ResultActivity extends Activity implements FaceUtil.FaceAlignListen
     @Override
     public void onUploadFailed(String msg) {
         deleteFolderFile(SAVEDIR + TEMPDIR + DIVIDE + picName,true);
-        deleteFolderFile(SAVEDIR + TEMPDIR + DIVIDE + PREFIX + picName,true);
         mEditText.setText("请检查网络连接！");
     }
 }

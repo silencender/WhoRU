@@ -33,7 +33,7 @@ public final class UploadReceiver extends UploadServiceBroadcastReceiver {
         Log.i(TAG, "The progress of the upload with ID "
                 + uploadId + " is: " + progress);
         try {
-            this.dialog.setProgress(progress / 2 + 50);
+            this.dialog.setProgress(progress);
         } catch (Exception e) {
         }
     }

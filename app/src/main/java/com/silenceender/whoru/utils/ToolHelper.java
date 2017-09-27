@@ -21,8 +21,6 @@ import com.silenceender.whoru.R;
 import com.silenceender.whoru.model.Person;
 import com.silenceender.whoru.model.RemoteDbManager;
 
-import org.opencv.core.Point;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -208,18 +206,6 @@ public final class ToolHelper {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static org.opencv.core.Point convertPoint(android.graphics.Point point) {
-        return new org.opencv.core.Point(point.x,point.y);
-    }
-
-    public static List<org.opencv.core.Point> convertPoints(List<android.graphics.Point> points) {
-        List<org.opencv.core.Point> cvPoints = new ArrayList<>();
-        for(android.graphics.Point point : points) {
-            cvPoints.add(convertPoint(point));
-        }
-        return cvPoints;
     }
 
     public static void get(RequestParams params, @NonNull AsyncHttpResponseHandler responseHandler) {

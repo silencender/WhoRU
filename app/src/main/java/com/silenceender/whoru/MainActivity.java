@@ -24,7 +24,6 @@ import cz.msebera.android.httpclient.Header;
 import com.silenceender.whoru.model.RemoteDbManager;
 import com.silenceender.whoru.preferences.MyPreferencesActivity;
 import com.silenceender.whoru.utils.CompressImageUtil;
-import com.silenceender.whoru.utils.FaceUtil;
 import com.silenceender.whoru.utils.JSONResponseHelper;
 import com.silenceender.whoru.utils.ToolHelper;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -151,12 +150,6 @@ public class MainActivity extends TakePhotoActivity {
     private void setParams() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         CompressImageUtil.setCompressSize(Integer.parseInt(sharedPref.getString("compressSize","1000")));
-        FaceUtil.setFaceSize(Integer.parseInt(sharedPref.getString("faceSize","96")));
-        if(Integer.parseInt(sharedPref.getString("faceMode","2")) == 2){
-            FaceUtil.setMode(this.getString(R.string.faceMode_2));
-        } else {
-            FaceUtil.setMode(this.getString(R.string.faceMode_1));
-        }
         ToolHelper.setServer(sharedPref.getString("server",getString(R.string.default_server)));
         Toast.makeText(MainActivity.this,sharedPref.getString("server",getString(R.string.default_server)),Toast.LENGTH_SHORT).show();
         setInherit(sharedPref.getString("inherit",""));
@@ -249,16 +242,6 @@ public class MainActivity extends TakePhotoActivity {
     public void onCompressFailed(String msg) {
         super.onCompressFailed(msg);
         Toast.makeText(mainActivity,"Failed in compress: "+msg,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFaceAlignSuccessed(String msg) {
-
-    }
-
-    @Override
-    public void onFaceAlignFailed(String msg) {
-
     }
 
 }

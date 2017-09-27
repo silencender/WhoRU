@@ -20,7 +20,6 @@ import com.silenceender.whoru.MainActivity;
 import com.silenceender.whoru.R;
 import com.silenceender.whoru.model.RemoteDbManager;
 import com.silenceender.whoru.utils.CompressImageUtil;
-import com.silenceender.whoru.utils.FaceUtil;
 import com.silenceender.whoru.utils.JSONResponseHelper;
 import com.silenceender.whoru.utils.ToolHelper;
 
@@ -66,23 +65,6 @@ public class MyPreferencesActivity extends PreferenceActivity {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     Log.i(TAG,newValue.toString());
                     return CompressImageUtil.setCompressSize(Integer.parseInt(newValue.toString()));
-                }
-            });
-            Preference face = findPreference("faceSize");
-            face.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    Log.i(TAG,newValue.toString());
-                    return FaceUtil.setFaceSize(Integer.parseInt(newValue.toString()));
-                }
-            });
-            final ListPreference faceMode = (ListPreference)findPreference("faceMode");
-            faceMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    String mode = faceMode.getEntry().toString();
-                    Log.i(TAG,mode);
-                    return FaceUtil.setMode(mode);
                 }
             });
             Preference server = findPreference("server");

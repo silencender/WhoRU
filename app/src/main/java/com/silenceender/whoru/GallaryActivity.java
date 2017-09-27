@@ -27,7 +27,6 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-import static com.silenceender.whoru.utils.FaceUtil.PREFIX;
 import static com.silenceender.whoru.utils.ToolHelper.*;
 
 /**
@@ -181,7 +180,7 @@ public class GallaryActivity extends TakePhotoActivity{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final String picName = listItems.get(position);
-                        RemoteDbManager.update(new Person(person.getName(),PREFIX + picName), new AsyncHttpResponseHandler() {
+                        RemoteDbManager.update(new Person(person.getName(),picName), new AsyncHttpResponseHandler() {
                             @Override
                             public void onStart() {
                                 startAnim();
@@ -195,7 +194,7 @@ public class GallaryActivity extends TakePhotoActivity{
                                 person.removePicname(position);
                                 db.update(person);
                                 deleteFolderFile(SAVEDIR + person.getName() + DIVIDE + picName,true);
-                                deleteFolderFile(SAVEDIR + person.getName() + DIVIDE + PREFIX + picName,true);
+                                deleteFolderFile(SAVEDIR + person.getName() + DIVIDE + picName,true);
                                 refreshList();
                             }
 
@@ -249,9 +248,8 @@ public class GallaryActivity extends TakePhotoActivity{
         super.onCompressSuccessed(imgPath);
         String[] splitedPath = imgPath.split(DIVIDE);
         picName = splitedPath[splitedPath.length-1];
-        dialog.setProgress(20);
-        //uploadMultipart(this,this,imgPath,this.person,this.dialog);
-        faceAlign(imgPath);
+        dialog.setMessage("上传图片中...");
+        uploadMultipart(this,this,imgPath,this.person,this.dialog);
     }
 
     @Override
@@ -262,31 +260,6 @@ public class GallaryActivity extends TakePhotoActivity{
         } catch (Exception e) {
         }
         Toast.makeText(gallaryActivity,"Failed in compress: "+msg,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFaceAlignInfo(String msg) {
-        super.onFaceAlignInfo(msg);
-        dialog.setMessage(msg);
-    }
-
-    @Override
-    public void onFaceAlignSuccessed(String imgPath) {
-        super.onFaceAlignSuccessed(imgPath);
-        dialog.setMessage("上传人脸数据中...");
-        dialog.setProgress(50);
-        uploadMultipart(this,this,imgPath,this.person,this.dialog);
-    }
-
-    @Override
-    public void onFaceAlignFailed(String msg) {
-        super.onFaceAlignFailed(msg);
-        try {
-            dialog.dismiss();
-        } catch (Exception e) {
-        }
-        deleteFolderFile(SAVEDIR + person.getName() + DIVIDE + picName,true);
-        Toast.makeText(gallaryActivity,msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -306,7 +279,6 @@ public class GallaryActivity extends TakePhotoActivity{
         } catch (Exception e) {
         }
         deleteFolderFile(SAVEDIR + person.getName() + DIVIDE + picName,true);
-        deleteFolderFile(SAVEDIR + person.getName() + DIVIDE + PREFIX + picName,true);
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 

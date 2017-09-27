@@ -9,17 +9,6 @@
         android:numeric="integer"
         />
         <EditTextPreference
-            android:title="人脸分辨率"
-            android:key="faceSize"
-            android:defaultValue="96"
-            android:numeric="integer"
-            />
-        <ListPreference     android:title="识别模式"
-            android:key="faceMode"
-            android:defaultValue="2"
-            android:entries="@array/faceArray"
-            android:entryValues="@array/faceValues" />
-        <EditTextPreference
             android:title="服务器地址"
             android:key="server"
             android:defaultValue="@string/default_server"
