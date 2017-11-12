@@ -9,30 +9,4 @@
     tools:context="com.silenceender.whoru.GallaryActivity"
     tools:showIn="@layout/activity_grid">
 
-    <GridView
-        android:id="@+id/gridview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:columnWidth="100dp"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="24dp"
-        android:horizontalSpacing="10dp"
-        android:stretchMode="spacingWidthUniform"
-        />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/avi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:indicatorColor="@color/steelblue"
-            android:visibility="invisible"
-            app:indicatorName="BallClipRotateIndicator"
-            />
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

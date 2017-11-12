@@ -130,6 +130,11 @@ public class MainActivity extends TakePhotoActivity {
         avi.smoothToHide();
     }
 
+    public void openSettings(View view){
+        Intent i = new Intent(this, MyPreferencesActivity.class);
+        startActivity(i);
+    }
+
     private static void addNewDevice() {
         RemoteDbManager.addNewDevice(mainActivity, new AsyncHttpResponseHandler() {
             @Override

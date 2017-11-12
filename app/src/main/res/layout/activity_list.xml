@@ -21,6 +21,18 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_list" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            tools:layout_editor_absoluteY="8dp"
+            tools:layout_editor_absoluteX="8dp">
+        </ListView>
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addfab"
@@ -38,6 +50,20 @@
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/pink"
         app:srcCompat="@drawable/ic_delete_black_24dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/steelblue"
+            android:visibility="invisible"
+            app:indicatorName="BallClipRotateIndicator"
+            />
+    </RelativeLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

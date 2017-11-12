@@ -1,4 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.silenceender.whoru.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/pink"
+            android:visibility="invisible"
+            app:indicatorName="BallClipRotateIndicator"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ButtonRLayout"
+        android:background="@drawable/background">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <LinearLayout
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:id="@+id/headerLayout"
+                android:background="@android:color/transparent"
+                android:layout_weight="0.4"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/header"/>
+                    <ImageButton
+                        android:id="@+id/preButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_alignParentRight="true"
+                        android:onClick="openSettings"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/imagename"/>
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:id="@+id/textLayout"
+                android:layout_below="@+id/headerLayout"
+                android:background="@android:color/transparent"
+                android:layout_weight="0.2"
+                android:orientation="horizontal">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_below="@+id/textLayout"
+                android:background="@color/transpurple"
+                android:layout_weight="0.4"
+                android:weightSum="2" >
+                <!--
+                    <Button
+                        android:id="@+id/btnTakeOriginal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="cropPic"
+                        android:text="从相机拍取照片不裁剪" />
+                -->
+                <LinearLayout
+                    android:layout_below="@+id/ButtonLayout"
+                    android:layout_height="80dp"
+                    android:layout_width="fill_parent"
+                    android:gravity = "center_horizontal"
+                    android:layout_weight="1"
+                    android:id="@+id/ButtonLayout2"
+                    android:weightSum="1.2">
+
+
+                    <ImageButton
+                        android:id="@+id/desButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:onClick="uploadToGallary"
+                        android:textSize="16sp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/pen"
+                        android:layout_weight="0.6"/>
+
+                    <ImageButton
+                        android:id="@+id/searchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:onClick="showChooseDialog"
+                        android:textSize="16sp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/glass"
+                        android:layout_weight="0.6"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
+<!--
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -41,3 +164,4 @@
             />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
+-->
